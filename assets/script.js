@@ -71,3 +71,9 @@ mediumLevel.addEventListener('click', function(){
     maxCellNumber81.classList.remove('d-none');
     maxCellNumber100.classList.add('d-none');
 })*/
+
+/* Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
+nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.*/
+
+const randomNumber = Array.from({length: 16}, () => Math.floor(Math.random() * 100 + 1));;
+console.log(randomNumber);
