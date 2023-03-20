@@ -52,7 +52,7 @@ for (let i = 0; i < cells.length; i++) {
     console.log(thisCell);
 
     thisCell.addEventListener('click', function(){
-        this.classList.toggle('bg-red')
+        this.classList.toggle('bg-blue')
         console.log(thisCell);
     })
 }
@@ -75,5 +75,20 @@ mediumLevel.addEventListener('click', function(){
 /* Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
 nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.*/
 
-const randomNumber = Array.from({length: 16}, () => Math.floor(Math.random() * 100 + 1));;
-console.log(randomNumber);
+let randomNumbers = [];
+
+for (let i = 0; i < 16; i++) {
+    let aNumber = Math.floor(Math.random() * 100 + 1);
+    if (!randomNumbers.includes(aNumber)) {
+      randomNumbers.push(aNumber);
+    }
+}
+
+console.log(randomNumbers);
+/**In seguito l'utente clicca su una cella:
+- se il numero è presente nella lista dei numeri generati
+abbiamo calpestato una bomba
+- la cella si colora di rosso e la partita termina. 
+Altrimenti
+- la cella cliccata si colora di azzurro
+- l'utente può continuare a cliccare sulle altre celle.*/
