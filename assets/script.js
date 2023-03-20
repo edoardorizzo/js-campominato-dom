@@ -5,11 +5,11 @@ const mainCont = document.querySelector('.main_container')
 const startGame = document.querySelector('.start_game');
 const resetGame = document.querySelector('.reset')
 
-startGame.addEventListener('click', function(){
+startGame.addEventListener('click', function () {
     mainCont.classList.remove('d-none')
 })
 
-resetGame.addEventListener('click', function(){
+resetGame.addEventListener('click', function () {
     mainCont.classList.add('d-none')
 })
 
@@ -21,21 +21,9 @@ resetGame.addEventListener('click', function(){
 
 const containerElm = document.querySelector('.container');
 const maxCellNumber100 = 100;
-const maxCellNumber81 = 81;
-const maxCellNumber49 = 49;
 
 for (let i = 0; i < maxCellNumber100; i++) {
     const cellMarkup = `<div class="cell">${i + 1}</div>`;
-    containerElm.innerHTML += cellMarkup;
-}
-
-for (let i = 0; i < maxCellNumber81; i++) {
-    const cellMarkup = `<div class="cell d-none">${i + 1}</div>`;
-    containerElm.innerHTML += cellMarkup;
-}
-
-for (let i = 0; i < maxCellNumber49; i++) {
-    const cellMarkup = `<div class="cell d-none">${i + 1}</div>`;
     containerElm.innerHTML += cellMarkup;
 }
 
@@ -44,67 +32,50 @@ for (let i = 0; i < maxCellNumber49; i++) {
  * sulla cella selezionata aggiungo un event listener
  * recupero l'elemento della dom che ho cliccato e associo il colore rosso
  * al click su ogni cella, emetto un messaggio in console con il numero della cella cliccata.
- */
-let randomNumbers = [];
+ 
+Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
+nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.
+In seguito l'utente clicca su una cella:
+se il numero è presente nella lista dei numeri generati
+abbiamo calpestato una bomba
+la cella si colora di rosso e la partita termina.
+
+Altrimenti
+la cella cliccata si colora di azzurro
+l'utente può continuare a cliccare sulle altre celle.
+La partita termina quando il giocatore clicca su una bomba o quando raggiunge il numero massimo possibile di numeri consentiti (ovvero quando ha rivelato tutte le celle che non sono bombe).
+Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba. */
+
+const cells = document.querySelectorAll('.cell');
+const bombNumbers = [];
+let click = 0;
 
 for (let i = 0; i < 16; i++) {
     let aNumber = Math.floor(Math.random() * 100 + 1);
-    if (!randomNumbers.includes(aNumber)) {
-      randomNumbers.push(aNumber);
+    if (!bombNumbers.includes(aNumber)) {
+        bombNumbers.push(aNumber);
     }
+    console.log(aNumber);
 }
-
-const cells = document.querySelectorAll('.cell');
-let cellNumber = cells + randomNumbers;
-console.log(cellNumber, 'Cell + randomNumber');
 
 for (let i = 0; i < cells.length; i++) {
     const thisCell = cells[i];
-    console.log(thisCell);
+    if (bombNumbers.includes(i)) {
+        thisCell.isBomb = 'true';
+    }
 
-    /*thisCell.addEventListener('click', function(){
-        this.classList.toggle('bg-blue')
-        console.log(thisCell);
-    })*/
+    thisCell.addEventListener('click', function () {
+        click++;
 
-    thisCell.addEventListener('click', function(){
-        if (thisCell.includes(cellNumber)) {
+        if (thisCell.isBomb === 'true') {
             thisCell.classList.add('bg-red');
-            thisCell.classList.remove('bg.blue');
+            thisCell.innerHTML += ('<i class="fa-solid fa-bomb"></i>')
+            alert(`ESPLOSIONE! Il tuo punteggio è di ${click} click`);
+            document.location.reload();
         } else {
-            thisCell.classList.remove('bg-red');
-            thisCell.classList.add('bg.blue');
+            thisCell.classList.add('bg-blue');
+            
         }
-    })
+    });
 }
-
-/* Aggiungere una select accanto al bottone di generazione, che fornisca una scelta tra tre diversi livelli di difficoltà:
-con difficoltà 1 => 100 caselle, con un numero compreso tra 1 e 100, divise in 10 caselle per 10 righe;
-con difficoltà 2 => 81 caselle, con un numero compreso tra 1 e 81, divise in 9 caselle per 9 righe;
-con difficoltà 3 => 49 caselle, con un numero compreso tra 1 e 49, divise in 7 caselle per 7 righe; */
-
-/*const selectLevel = document.querySelector('section');
-const easyLevel = document.getElementById('easy');
-const mediumLevel = document.getElementById('medium');
-const hardLevel = document.getElementById('hard');
-
-mediumLevel.addEventListener('click', function(){
-    maxCellNumber81.classList.remove('d-none');
-    maxCellNumber100.classList.add('d-none');
-})*/
-
-/* Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
-nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.*/
-
-
-
-console.log(randomNumbers);
-/**In seguito l'utente clicca su una cella:
-- se il numero è presente nella lista dei numeri generati
-abbiamo calpestato una bomba
-- la cella si colora di rosso e la partita termina. 
-Altrimenti
-- la cella cliccata si colora di azzurro
-- l'utente può continuare a cliccare sulle altre celle.*/
-
 

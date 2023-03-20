@@ -83,3 +83,10 @@ select{
 .bg-red{
     background-color: rgb(255, 0, 0);
 }
+
+.cell i{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
