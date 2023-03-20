@@ -49,14 +49,17 @@ Al termine della partita il software deve comunicare il punteggio, cioè il nume
 const cells = document.querySelectorAll('.cell');
 const bombNumbers = [];
 let click = 0;
+let youLose = false;
 
 for (let i = 0; i < 16; i++) {
     let aNumber = Math.floor(Math.random() * 100 + 1);
     if (!bombNumbers.includes(aNumber)) {
         bombNumbers.push(aNumber);
     }
+
     console.log(aNumber);
 }
+
 
 for (let i = 0; i < cells.length; i++) {
     const thisCell = cells[i];
@@ -74,7 +77,10 @@ for (let i = 0; i < cells.length; i++) {
             document.location.reload();
         } else {
             thisCell.classList.add('bg-blue');
-            
+        }
+
+        if (click === cells.length - bombNumbers.length && !youLose) {
+            alert('Nessuna bomba esplosa, hai vinto!');
         }
     });
 }
