@@ -45,15 +45,36 @@ for (let i = 0; i < maxCellNumber49; i++) {
  * recupero l'elemento della dom che ho cliccato e associo il colore rosso
  * al click su ogni cella, emetto un messaggio in console con il numero della cella cliccata.
  */
+let randomNumbers = [];
+
+for (let i = 0; i < 16; i++) {
+    let aNumber = Math.floor(Math.random() * 100 + 1);
+    if (!randomNumbers.includes(aNumber)) {
+      randomNumbers.push(aNumber);
+    }
+}
 
 const cells = document.querySelectorAll('.cell');
+let cellNumber = cells + randomNumbers;
+console.log(cellNumber, 'Cell + randomNumber');
+
 for (let i = 0; i < cells.length; i++) {
     const thisCell = cells[i];
     console.log(thisCell);
 
-    thisCell.addEventListener('click', function(){
+    /*thisCell.addEventListener('click', function(){
         this.classList.toggle('bg-blue')
         console.log(thisCell);
+    })*/
+
+    thisCell.addEventListener('click', function(){
+        if (thisCell.includes(cellNumber)) {
+            thisCell.classList.add('bg-red');
+            thisCell.classList.remove('bg.blue');
+        } else {
+            thisCell.classList.remove('bg-red');
+            thisCell.classList.add('bg.blue');
+        }
     })
 }
 
@@ -75,14 +96,7 @@ mediumLevel.addEventListener('click', function(){
 /* Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
 nella stessa cella può essere posizionata al massimo una bomba, perciò nell’array delle bombe non potranno esserci due numeri uguali.*/
 
-let randomNumbers = [];
 
-for (let i = 0; i < 16; i++) {
-    let aNumber = Math.floor(Math.random() * 100 + 1);
-    if (!randomNumbers.includes(aNumber)) {
-      randomNumbers.push(aNumber);
-    }
-}
 
 console.log(randomNumbers);
 /**In seguito l'utente clicca su una cella:
@@ -92,3 +106,5 @@ abbiamo calpestato una bomba
 Altrimenti
 - la cella cliccata si colora di azzurro
 - l'utente può continuare a cliccare sulle altre celle.*/
+
+
