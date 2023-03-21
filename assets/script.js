@@ -68,7 +68,6 @@ for (let i = 0; i < cells.length; i++) {
     }
 
     thisCell.addEventListener('click', function () {
-        click++;
 
         if (thisCell.isBomb === 'true') {
             thisCell.classList.add('bg-red');
@@ -77,6 +76,7 @@ for (let i = 0; i < cells.length; i++) {
             document.location.reload();
         } else {
             thisCell.classList.add('bg-blue');
+            click++;
         }
 
         if (click === cells.length - bombNumbers.length && !youLose) {
